@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Farmer{
+  id Int @id @default(autoincrement())
+  pass String
+  name String?
+  cow Cow[]
+  milk Milk[]
+  raw RawMaterial[]
+}
+
+model Employee{
+  id Int @id @default(autoincrement())
+  pass String
+  name String?
+  designation String?
+}
+
+model Cow{
+  id Int @id @default(autoincrement())
+  age Int?
+  vacination String?
+  hstar String?
+  farmer Farmer @relation(fields: [farmerId],references: [id])
+  farmerId Int
+  milk Milk[]
+  raw RawMaterial[]
+}
+
+model Milk{
+  id Int @id @default(autoincrement())
+  quantity String
+  date String
+  price String
+  amt String
+  farmer Farmer @relation(fields: [farmerId],references: [id])
+  farmerId Int
+  cows Cow @relation(fields: [cowId],references: [id])
+  cowId Int
+}
+
+model RawMaterial{
+  id Int @id @default(autoincrement())
+  feed String
+  drug String
+  farmer Farmer @relation(fields: [farmerId],references: [id])
+  farmerId Int
+  cows Cow @relation(fields: [cowId],references: [id])
+  cowId Int
+}

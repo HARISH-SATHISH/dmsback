@@ -1,0 +1,24 @@
+{
+  "name": "back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node build/index",
+    "build":"tsc -p .",
+    "dev":"tsc-watch --onSuccess \"npm start\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.9.1",
+    "@types/cors": "^2.8.17",
+    "cors": "^2.8.5",
+    "graphql": "^16.8.1",
+    "prisma": "^5.9.1",
+    "tsc-watch": "^6.0.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
