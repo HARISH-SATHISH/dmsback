@@ -17,6 +17,10 @@ const express_1 = __importDefault(require("express"));
 const server_1 = require("@apollo/server");
 const express4_1 = require("@apollo/server/express4");
 const body_parser_1 = __importDefault(require("body-parser"));
+const farmer_1 = require("./farmer");
+const cow_1 = require("./cow");
+const milk_1 = require("./milk");
+const raw_1 = require("./raw");
 const cors_1 = __importDefault(require("cors"));
 function initServer() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -25,17 +29,18 @@ function initServer() {
         app.use((0, cors_1.default)());
         const graphqlServer = new server_1.ApolloServer({
             typeDefs: `
-    
+    ${farmer_1.farmer.type}
+    ${cow_1.cow.type}
+    ${milk_1.milk.type}
+    ${raw_1.raw.type}
     type Query{
         hello: String ,
-     
+        ${farmer_1.farmer.query}
     }
     
     `,
             resolvers: {
-                Query: {
-                    hello: () => 'Hello, GraphQL!',
-                },
+                Query: Object.assign({ hello: () => 'Hello, GraphQL!' }, farmer_1.farmer.resolvers.query),
                 //   Mutation: {
                 //   },
             }
