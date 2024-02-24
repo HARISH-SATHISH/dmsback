@@ -15,6 +15,21 @@ const query = {
     getFarmer: (parent, { token }) => __awaiter(void 0, void 0, void 0, function* () {
         const farmer = yield db_1.prismaClient.farmer.findUnique({ where: { id: token.id } });
         return farmer;
+    }),
+    verifyFarmer: (parent, { payload }) => __awaiter(void 0, void 0, void 0, function* () {
+        const farmer = yield db_1.prismaClient.farmer.findUnique({ where: { id: payload.id } });
+        if ((farmer === null || farmer === void 0 ? void 0 : farmer.pass) == payload.pass) {
+            return farmer;
+        }
+        else {
+            return null;
+        }
     })
 };
-exports.resolvers = { query };
+const extraResolvers = {
+    Farmer: {
+        cow: (parent) => db_1.prismaClient.cow.findMany({ where: { farmerId: parent.id } }),
+        raw: (parent) => db_1.prismaClient.rawMaterial.findMany({ where: { farmerId: parent.id } })
+    }
+};
+exports.resolvers = { query, extraResolvers };

@@ -1,4 +1,5 @@
 import {type} from './type'
-
-
-export const cow={type}
+import {mutation} from './mutation'
+import {resolvers} from './resolvers'
+ 
+export const cow={type,mutation,resolvers}

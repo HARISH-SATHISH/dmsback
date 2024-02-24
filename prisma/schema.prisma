@@ -33,20 +33,19 @@ model Cow{
   hstar String?
   farmer Farmer @relation(fields: [farmerId],references: [id])
   farmerId Int
-  milk Milk[]
+  
   raw RawMaterial[]
 }
 
 model Milk{
   id Int @id @default(autoincrement())
-  quantity String
+  quantity Int
   date String
-  price String
-  amt String
+  price Int
+  amt Int
   farmer Farmer @relation(fields: [farmerId],references: [id])
   farmerId Int
-  cows Cow @relation(fields: [cowId],references: [id])
-  cowId Int
+  
 }
 
 model RawMaterial{

@@ -6,6 +6,7 @@ import {farmer} from './farmer'
 import {cow} from './cow'
 import {milk} from './milk'
 import {raw} from './raw'
+import {emp} from './employee'
 
 import cors from 'cors'
 
@@ -20,21 +21,31 @@ export async function initServer() {
     ${cow.type}
     ${milk.type}
     ${raw.type}
+    ${emp.type}
     type Query{
         hello: String ,
-        ${farmer.query}
+        ${farmer.query},
+        ${emp.query}
+    }
+    type Mutation{
+      ${milk.mutation},
+      ${raw.mutation},
+      ${cow.mutation}
     }
     
     `,
     resolvers: {
       Query: {
         hello: () => 'Hello, GraphQL!',
-        ...farmer.resolvers.query
+        ...farmer.resolvers.query,
+        ...emp.resolvers.query
       },
-    //   Mutation: {
-       
-    //   },
-     
+      Mutation: {
+       ...milk.resolvers.mutation,
+       ...raw.resolvers.mutation,
+       ...cow.resolvers.mutation
+      },
+     ...farmer.resolvers.extraResolvers
     }
   });
 

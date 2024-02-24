@@ -21,6 +21,7 @@ const farmer_1 = require("./farmer");
 const cow_1 = require("./cow");
 const milk_1 = require("./milk");
 const raw_1 = require("./raw");
+const employee_1 = require("./employee");
 const cors_1 = __importDefault(require("cors"));
 function initServer() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -33,17 +34,20 @@ function initServer() {
     ${cow_1.cow.type}
     ${milk_1.milk.type}
     ${raw_1.raw.type}
+    ${employee_1.emp.type}
     type Query{
         hello: String ,
-        ${farmer_1.farmer.query}
+        ${farmer_1.farmer.query},
+        ${employee_1.emp.query}
+    }
+    type Mutation{
+      ${milk_1.milk.mutation},
+      ${raw_1.raw.mutation},
+      ${cow_1.cow.mutation}
     }
     
     `,
-            resolvers: {
-                Query: Object.assign({ hello: () => 'Hello, GraphQL!' }, farmer_1.farmer.resolvers.query),
-                //   Mutation: {
-                //   },
-            }
+            resolvers: Object.assign({ Query: Object.assign(Object.assign({ hello: () => 'Hello, GraphQL!' }, farmer_1.farmer.resolvers.query), employee_1.emp.resolvers.query), Mutation: Object.assign(Object.assign(Object.assign({}, milk_1.milk.resolvers.mutation), raw_1.raw.resolvers.mutation), cow_1.cow.resolvers.mutation) }, farmer_1.farmer.resolvers.extraResolvers)
         });
         yield graphqlServer.start();
         app.use('/graphql', (0, express4_1.expressMiddleware)(graphqlServer));
