@@ -29,7 +29,8 @@ const query = {
 const extraResolvers = {
     Farmer: {
         cow: (parent) => db_1.prismaClient.cow.findMany({ where: { farmerId: parent.id } }),
-        raw: (parent) => db_1.prismaClient.rawMaterial.findMany({ where: { farmerId: parent.id } })
+        raw: (parent) => db_1.prismaClient.rawMaterial.findMany({ where: { farmerId: parent.id } }),
+        milk: (parent) => db_1.prismaClient.milk.findMany({ where: { farmerId: parent.id } }),
     }
 };
 exports.resolvers = { query, extraResolvers };

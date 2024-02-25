@@ -31,7 +31,8 @@ const query={
 const extraResolvers={
   Farmer:{
     cow:(parent:farmerdata)=>prismaClient.cow.findMany({where:{farmerId:parent.id}}),
-    raw:(parent:farmerdata)=>prismaClient.rawMaterial.findMany({where:{farmerId:parent.id}})
+    raw:(parent:farmerdata)=>prismaClient.rawMaterial.findMany({where:{farmerId:parent.id}}),
+    milk:(parent:farmerdata)=>prismaClient.milk.findMany({where:{farmerId:parent.id}}),
   }
 }
 
